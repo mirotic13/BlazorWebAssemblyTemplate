@@ -1,3 +1,5 @@
+using BlazorWebAssemblyTemplate.Server.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +9,11 @@ builder.Services.AddRazorPages();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder
+    .ConfigureDatabase()
+    .ConfigureRepositories()
+    .ConfigureServices();
 
 var app = builder.Build();
 

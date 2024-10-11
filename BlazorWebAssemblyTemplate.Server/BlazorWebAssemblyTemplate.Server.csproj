@@ -7,13 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorWebAssemblyTemplate.Client\BlazorWebAssemblyTemplate.Client.csproj" />
     <ProjectReference Include="..\BlazorWebAssemblyTemplate.Shared\BlazorWebAssemblyTemplate.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <None Update="Database\ExampleDb.db">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
   </ItemGroup>
 
 </Project>
