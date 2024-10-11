@@ -1,0 +1,80 @@
+# Archivos de configuración de Visual Studio
+.vscode/
+*.sln
+*.user
+*.suo
+*.csproj.user
+*.ide
+*.dbmdl
+*.jfm
+*.ncb
+*.sdf
+*.opensdf
+*.opendb
+*.tmp
+
+# Archivos de configuración de Rider
+.idea/
+*.sln.iml
+
+# Archivos de compilación de .NET
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.mdb
+*.appx
+*.appxbundle
+*.apk
+*.msix
+*.msixbundle
+
+# Archivos de publicación de Blazor WebAssembly
+wwwroot/
+*.json
+
+# Archivos de publicación de ASP.NET Core
+wwwroot/
+
+# Archivos de configuración de NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+*.symbols.nupkg
+packages/
+*.cache
+*.zip
+
+# Entornos de desarrollo
+.env
+*.local
+
+# Archivos de registro
+*.log
+
+# Archivos de caché
+*.cache
+*.vs/
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+
+# Otros archivos que pueden generarse
+*.db
+*.sqlite
+
+# Ignorar carpetas de pruebas
+TestResults/
+/TestResults/
+/coverage/
+
+# Ignorar carpetas de build
+build/
+dist/
+
+# Ignorar archivos de configuración de herramientas
+*.code-workspace
+*.dotnet/
