@@ -16,5 +16,4 @@ Este repositorio es una plantilla para aplicaciones **Blazor WebAssembly** con u
 4. Para instalar la app como aplicación de escritorio, ejecuta: 
    ```bash
    dotnet publish -c Release -o out
-# Luego, utiliza herramientas como Squirrel para empaquetar e instalar
-# Más información en: [Squirrel](https://github.com/Squirrel/Squirrel.Windows)
+# Luego, utiliza herramientas como [Squirrel](https://github.com/Squirrel/Squirrel.Windows) para empaquetar e instalar
