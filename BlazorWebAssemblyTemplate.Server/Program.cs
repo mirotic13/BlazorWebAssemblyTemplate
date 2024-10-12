@@ -1,4 +1,5 @@
 using BlazorWebAssemblyTemplate.Server.Configuration;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,10 @@ builder.Services.AddSwaggerGen();
 builder
     .ConfigureDatabase()
     .ConfigureRepositories()
-    .ConfigureServices();
+    .ConfigureServices()
+    .ConfigureCustomAuthentication()
+    .ConfigurePolicies()
+    .ConfigureCustomSwagger();
 
 var app = builder.Build();
 
@@ -30,7 +34,26 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStatusCodePages(async context =>
+{
+    var response = context.HttpContext.Response;
+
+    if (response.StatusCode == (int)HttpStatusCode.Forbidden)
+    {
+        response.ContentType = "application/json";
+        var errorMessage = new { message = "No tienes permisos para acceder a este recurso." };
+        await response.WriteAsJsonAsync(errorMessage);
+    }
+    else if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
+    {
+        response.ContentType = "application/json";
+        var errorMessage = new { message = "Se necesita autenticación para acceder a este servidor" };
+        await response.WriteAsJsonAsync(errorMessage);
+    }
+});
 
 app.MapRazorPages();
 app.MapControllers();

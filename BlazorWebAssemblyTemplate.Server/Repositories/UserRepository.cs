@@ -15,7 +15,7 @@ namespace BlazorWebAssemblyTemplate.Server.Repositories
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var query = @"SELECT id, name, email, password, created_at AS CreatedAt FROM users";
+            var query = @"SELECT id, name, email, created_at AS CreatedAt FROM users";
             return await _localDbConnection.QueryAsync<User>(query);
         }
     }
