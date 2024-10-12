@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\dani-\\source\\repos\\BlazorWebAssemblyTemplate\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4D6E46D3-F137-45A6-B464-FD7F953D0545}|BlazorWebAssemblyTemplate.Server\\BlazorWebAssemblyTemplate.Server.csproj|c:\\users\\dani-\\source\\repos\\blazorwebassemblytemplate\\blazorwebassemblytemplate.server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D6E46D3-F137-45A6-B464-FD7F953D0545}|BlazorWebAssemblyTemplate.Server\\BlazorWebAssemblyTemplate.Server.csproj|solutionrelative:blazorwebassemblytemplate.server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\dani-\\source\\repos\\BlazorWebAssemblyTemplate\\BlazorWebAssemblyTemplate.Server\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "BlazorWebAssemblyTemplate.Server\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\dani-\\source\\repos\\BlazorWebAssemblyTemplate\\BlazorWebAssemblyTemplate.Server\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "BlazorWebAssemblyTemplate.Server\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T23:43:07.764Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
