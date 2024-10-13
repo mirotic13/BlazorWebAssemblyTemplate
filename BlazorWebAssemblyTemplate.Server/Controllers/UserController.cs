@@ -14,6 +14,7 @@ namespace BlazorWebAssemblyTemplate.Server.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var response = await _userService.GetUsers();
+
             return Ok(response);
         }
     }

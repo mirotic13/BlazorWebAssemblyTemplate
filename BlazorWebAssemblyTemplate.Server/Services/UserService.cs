@@ -10,7 +10,7 @@ namespace BlazorWebAssemblyTemplate.Server.Services
 
     public class UserService(IUserRepository userRepository) : IUserService
     {
-        private IUserRepository _userRepository = userRepository;
+        private readonly IUserRepository _userRepository = userRepository;
 
         public async Task<IEnumerable<User>> GetUsers() => await _userRepository.GetUsers();
     }
