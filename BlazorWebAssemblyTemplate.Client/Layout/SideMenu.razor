@@ -1,0 +1,36 @@
+﻿<Bar Mode="BarMode.VerticalInline"
+        CollapseMode="BarCollapseMode.Small"
+        Breakpoint="Breakpoint.Desktop"
+        NavigationBreakpoint="Breakpoint.Tablet"
+        ThemeContrast="ThemeContrast.Dark">
+    <BarToggler />
+    <BarBrand>
+        <BarItem>
+            <BarLink To="#">
+                <BarIcon IconName="IconName.Dashboard" />
+                AppName
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="counter">
+                    <BarIcon IconName="IconName.PlusCircle" /> Counter
+                </BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="users">
+                    <BarIcon IconName="IconName.UserFriends" /> Users
+                </BarLink>
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            <BarItem>
+                <BarLink To="admin">
+                    <BarIcon IconName="IconName.Lock" /> Admin
+                </BarLink>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>

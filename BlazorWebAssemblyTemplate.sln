@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssemblyTemplate.Server", "BlazorWebAssemblyTemplate.Server\BlazorWebAssemblyTemplate.Server.csproj", "{4D6E46D3-F137-45A6-B464-FD7F953D0545}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssemblyTemplate.Server", "BlazorWebAssemblyTemplate.Server\BlazorWebAssemblyTemplate.Server.csproj", "{4D6E46D3-F137-45A6-B464-FD7F953D0545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssemblyTemplate.Shared", "BlazorWebAssemblyTemplate.Shared\BlazorWebAssemblyTemplate.Shared.csproj", "{1B9882A1-9912-4961-9486-994F28197D23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssemblyTemplate.Shared", "BlazorWebAssemblyTemplate.Shared\BlazorWebAssemblyTemplate.Shared.csproj", "{1B9882A1-9912-4961-9486-994F28197D23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssemblyTemplate.Client", "BlazorWebAssemblyTemplate.Client\BlazorWebAssemblyTemplate.Client.csproj", "{6FC318CF-F2B0-4D5E-933D-9AF73B2E6B20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssemblyTemplate.Client", "BlazorWebAssemblyTemplate.Client\BlazorWebAssemblyTemplate.Client.csproj", "{6FC318CF-F2B0-4D5E-933D-9AF73B2E6B20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
