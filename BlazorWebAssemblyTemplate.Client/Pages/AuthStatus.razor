@@ -1,0 +1,30 @@
+﻿@page "/auth-status"
+@inject IAuthService AuthService
+
+<h3>AuthStatus</h3>
+
+@if (_authStatus.IsAuthenticated)
+{
+    <p>Welcome, @(_authStatus.Role)!</p>
+    @if (_authStatus.Role == "Admin")
+    {
+        <p>You have admin privileges.</p>
+    }
+    else
+    {
+        <p>You are a regular user.</p>
+    }
+}
+else
+{
+    <p>You are not authenticated.</p>
+}
+
+@code {
+    private AuthenticationStatus _authStatus = new AuthenticationStatus();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _authStatus = await AuthService.GetAuthenticationStatus();
+    }
+}
