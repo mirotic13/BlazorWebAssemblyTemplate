@@ -12,34 +12,49 @@
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Fecha de alta</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in users)
-            {
-                <tr>
-                    <td>@user.Id</td>
-                    <td>@user.Name</td>
-                    <td>@user.Email</td>
-                    <td>@user.CreatedAt.ToString()</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <DataGrid TItem="User"
+              Data="@users"
+              @bind-SelectedRow="@selectedUser"
+              Editable
+              Responsive
+              ShowPager
+              CommandMode="DataGridCommandMode.ButtonRow"
+              EditMode="DataGridEditMode.Popup">
+        <DataGridColumns>
+            <DataGridCommandColumn NewCommandAllowed="false" EditCommandAllowed="false" DeleteCommandAllowed="false" CancelCommandAllowed>
+                <SaveCommandTemplate>
+                    <Button ElementId="btnSave" Type="ButtonType.Submit" PreventDefaultOnSubmit Color="Color.Primary" Clicked="@context.Clicked">Guardar</Button>
+                </SaveCommandTemplate>
+                <CancelCommandTemplate>
+                    <Button ElementId="btnCancel" Color="Color.Secondary" Clicked="@context.Clicked">Cancelar</Button>
+                </CancelCommandTemplate>
+            </DataGridCommandColumn>
+            <DataGridColumn Field="@nameof(User.Id)" Caption="#" Sortable="false" />
+            <DataGridColumn Field="@nameof(User.Name)" Caption="Name" Editable />
+            <DataGridColumn Field="@nameof(User.Email)" Caption="Email" Editable />
+            <DataGridColumn Field="@nameof(User.CreatedAt)" Caption="Fecha de creación" Editable />
+        </DataGridColumns>
+        <ButtonRowTemplate>
+            <Button Color="Color.Success" Clicked="context.NewCommand.Clicked">Nuevo usuario</Button>
+            <Button Color="Color.Primary" Disabled="(selectedUser is null)" Clicked="context.EditCommand.Clicked">Editar</Button>
+            <Button Color="Color.Danger" Disabled="(selectedUser is null)" Clicked="context.DeleteCommand.Clicked">Borrar</Button>
+            <Button Color="Color.Link" Clicked="context.ClearFilterCommand.Clicked">Restaurar filtros</Button>
+        </ButtonRowTemplate>
+    </DataGrid>
 }
 
+<style>
+    .ant-display-inline-block .control {
+        display: inline-block;
+    }
+</style>
+
 @code {
-    private User[]? users;
+    private List<User> users;
+    private User selectedUser;
 
     protected override async Task OnInitializedAsync()
     {
-        users = await Http.GetFromJsonAsync<User[]>("api/user");
+        users = await Http.GetFromJsonAsync<List<User>>("api/user");
     }
 }
