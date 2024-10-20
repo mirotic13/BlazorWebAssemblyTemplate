@@ -1,24 +1,31 @@
 ﻿@page "/auth-status"
 @inject IAuthService AuthService
 
-<h3>AuthStatus</h3>
+<PageTitle>AuthStatus</PageTitle>
 
-@if (_authStatus.IsAuthenticated)
-{
-    <p>Welcome, @(_authStatus.Role)!</p>
-    @if (_authStatus.Role == "Admin")
+<Container Display="Display.Flex"
+           Flex="Flex.Column.AlignItems.Center.JustifyContent.Center"
+           Height="Height.Is100">
+    <Heading Size="HeadingSize.Is3">AuthStatus</Heading>
+
+    @if (_authStatus.IsAuthenticated)
     {
-        <p>You have admin privileges.</p>
+        <Paragraph>Welcome, @(_authStatus.Role)!</Paragraph>
+        @if (_authStatus.Role == "Admin")
+        {
+            <Paragraph>You have admin privileges.</Paragraph>
+        }
+        else
+        {
+            <Paragraph>You are a regular user.</Paragraph>
+        }
     }
     else
     {
-        <p>You are a regular user.</p>
+        <Paragraph>You are not authenticated.</Paragraph>
     }
-}
-else
-{
-    <p>You are not authenticated.</p>
-}
+</Container>
+
 
 @code {
     private AuthenticationStatus _authStatus = new AuthenticationStatus();

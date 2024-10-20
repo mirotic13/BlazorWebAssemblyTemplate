@@ -6,7 +6,7 @@
     <NotFound>
         <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <NotFound />
+            <NotFoundComponent />
         </LayoutView>
     </NotFound>
 </Router>
@@ -25,7 +25,7 @@
         }
         else if (authStatus.IsAuthenticated && args.Path.Contains("login", StringComparison.OrdinalIgnoreCase))
         {
-            Navigation.NavigateTo("/", true);
+            Navigation.NavigateTo("/home", true);
         }
     }
 }

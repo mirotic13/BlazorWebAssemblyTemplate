@@ -1,0 +1,32 @@
+﻿@page "/"
+
+<Container Display="Display.Flex"
+           Flex="Flex.Column.AlignItems.Center.JustifyContent.Center"
+           Height="Height.Is100">
+    <LoadingComponent />
+</Container>
+
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private IAuthService AuthService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CheckAuthentication();
+    }
+
+    private async Task CheckAuthentication()
+    {
+        var authStatus = await AuthService.GetAuthenticationStatus();
+
+        if (!authStatus.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/login", true);
+        }
+        else if (authStatus.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/home", true);
+        }
+    }
+}
