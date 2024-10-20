@@ -40,7 +40,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseSession();
 
-app.UseMiddleware<JwtSessionTokenMiddleware>();
+app.Use(async (context, next) =>
+{
+    var authService = context.RequestServices.GetRequiredService<IAuthService>();
+    var middleware = new JwtSessionTokenMiddleware(next, builder.Configuration, authService);
+    await middleware.InvokeAsync(context);
+});
 
 app.UseHttpsRedirection();
 
