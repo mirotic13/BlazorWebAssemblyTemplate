@@ -1,0 +1,73 @@
+﻿@page "/login"
+@using Blazorise
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<PageTitle>Login</PageTitle>
+
+<Layout Height="Height.Is100">
+    <LayoutContent Height="Height.Is100"
+                   Display="Display.Flex"
+                   Flex="Flex.AlignItems.Center.JustifyContent.Center">
+        <Div Shadow="Shadow.Small"
+             Width="Width.Is25.OnDesktop.Is50.OnTablet.Is100.OnMobile">
+            <Card>
+                <CardHeader>
+                    <Heading Size="HeadingSize.Is1" TextAlignment="TextAlignment.Center">Iniciar Sesión</Heading>
+                </CardHeader>
+                <CardBody>
+                    <Div Style="margin-bottom: 1rem">
+                        <TextEdit @bind-Text="@email" Placeholder="Correo Electrónico" Role="TextRole.Email" />
+                    </Div>
+                    <Div Style="margin-bottom: 1rem">
+                        <TextEdit @bind-Text="@password" Placeholder="Contraseña" Role="TextRole.Password" />
+                    </Div>
+                    <Alert Color="Color.Danger" @bind-Visible="@alertVisible">
+                        <AlertMessage Margin="Margin.Is2.FromEnd">@errorMessage</AlertMessage>
+                        <CloseButton />
+                    </Alert>
+                    <Button Color="Color.Primary" Width="Width.Is100" Clicked="@OnLoginClicked" Loading="@isSubmitting">Acceder</Button>
+                </CardBody>
+            </Card>
+        </Div>
+    </LayoutContent>
+</Layout>
+
+@code {
+    private string email;
+    private string password;
+    private bool alertVisible;
+    private string errorMessage;
+    private bool isSubmitting = false;
+
+    private async Task OnLoginClicked()
+    {
+        isSubmitting = true;
+        errorMessage = string.Empty;
+        alertVisible = false;
+
+        var loginRequest = new LoginRequest { Email = email, Password = password };
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("/api/auth/login", loginRequest);
+
+            if (response.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/home");
+            }
+            else
+            {
+                errorMessage = "Credenciales incorrectas. Inténtalo de nuevo.";
+                alertVisible = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ocurrió un error: {ex.Message}";
+            alertVisible = true;
+        }
+
+        isSubmitting = false;
+    }
+}

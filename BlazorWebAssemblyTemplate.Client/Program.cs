@@ -2,8 +2,8 @@ using BlazorWebAssemblyTemplate.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazorise;
-using Blazorise.Material;
-using Blazorise.Icons.Material;
+using Blazorise.AntDesign;
+using Blazorise.Icons.FontAwesome;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -16,7 +16,7 @@ builder.Services
     {
         options.Immediate = true;
     })
-    .AddMaterialProviders()
-    .AddMaterialIcons();
+    .AddAntDesignProviders()
+    .AddFontAwesomeIcons();
 
 await builder.Build().RunAsync();
