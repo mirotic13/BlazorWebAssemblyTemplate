@@ -16,6 +16,7 @@ namespace BlazorWebAssemblyTemplate.Server.Auth
         Task Register(RegisterRequest request);
         Task<bool> UserExists(string email);
         AuthenticationStatus GetUserAuthenticationStatus();
+        Task<string?> RenewToken();
     }
 
     public class AuthService(IDbConnection localConnection, IConfiguration config, IHttpContextAccessor httpContextAccessor) : IAuthService
@@ -98,6 +99,58 @@ namespace BlazorWebAssemblyTemplate.Server.Auth
                     IsAuthenticated = false,
                     Role = null
                 };
+            }
+        }
+
+        public async Task<string?> RenewToken()
+        {
+            var token = _httpContextAccessor.HttpContext.Session.GetString("JwtToken");
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return null;
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = validatedToken as JwtSecurityToken;
+
+                var roleClaim = jwtToken?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+                var emailClaim = jwtToken?.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
+                if (emailClaim == null)
+                {
+                    return null;
+                }
+
+                var query = "SELECT id, name, email, role FROM Users WHERE Email = @Email";
+                var user = await _localConnection.QuerySingleOrDefaultAsync<User>(query, new { Email = emailClaim });
+
+                if (user == null)
+                {
+                    return null;
+                }
+
+                var newToken = GenerateJwtToken(user);
+
+                _httpContextAccessor.HttpContext.Session.SetString("JwtToken", newToken);
+
+                return newToken;
+            }
+            catch
+            {
+                return null;
             }
         }
 

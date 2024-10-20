@@ -5,10 +5,11 @@ using System.Text;
 
 namespace BlazorWebAssemblyTemplate.Server.Auth
 {
-    public class JwtSessionTokenMiddleware(RequestDelegate next, IConfiguration config)
+    public class JwtSessionTokenMiddleware(RequestDelegate next, IConfiguration config, IAuthService authService)
     {
         private readonly RequestDelegate _next = next;
         private readonly string _jwtSecret = config["Jwt:Key"];
+        private readonly IAuthService _authService = authService;
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -16,6 +17,7 @@ namespace BlazorWebAssemblyTemplate.Server.Auth
             {
                 var token = Encoding.UTF8.GetString(tokenBytes);
                 var handler = new JwtSecurityTokenHandler();
+
                 try
                 {
                     var claimsPrincipal = handler.ValidateToken(token, new TokenValidationParameters
@@ -24,10 +26,21 @@ namespace BlazorWebAssemblyTemplate.Server.Auth
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret)),
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        RoleClaimType = ClaimTypes.Role
-                    }, out _);
+                        RoleClaimType = ClaimTypes.Role,
+                        ValidateLifetime = true
+                    }, out var validatedToken);
 
                     context.User = claimsPrincipal;
+
+                    var jwtToken = validatedToken as JwtSecurityToken;
+                    if (jwtToken != null && jwtToken.ValidTo < DateTime.UtcNow.AddMinutes(5))
+                    {
+                        var newToken = await _authService.RenewToken();
+                        if (newToken != null)
+                        {
+                            context.Session.SetString("JwtToken", newToken);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
