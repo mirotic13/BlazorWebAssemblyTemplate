@@ -1,4 +1,4 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿<Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="CheckAuthentication">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -6,7 +6,26 @@
     <NotFound>
         <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
+            <NotFound />
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+    [Inject] private IAuthService AuthService { get; set; }
+
+    private async Task CheckAuthentication(NavigationContext args)
+    {
+        var authStatus = await AuthService.GetAuthenticationStatus();
+
+        if (!authStatus.IsAuthenticated && !args.Path.Contains("login", StringComparison.OrdinalIgnoreCase))
+        {
+            Navigation.NavigateTo("/login", true);
+        }
+        else if (authStatus.IsAuthenticated && args.Path.Contains("login", StringComparison.OrdinalIgnoreCase))
+        {
+            Navigation.NavigateTo("/", true);
+        }
+    }
+}

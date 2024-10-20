@@ -1,0 +1,31 @@
+﻿<PageTitle>404 - Not Found</PageTitle>
+
+<Layout>
+    <Div Height="Height.Is100"
+        Display="Display.Flex"
+        Flex="Flex.AlignItems.Center.JustifyContent.Center">
+        <Card TextAlignment="TextAlignment.Center">
+            <CardImage Source="/img/404-page-not-found.png" Alt="NotFoundImage" />
+            <CardBody>
+                <CardTitle Size="6">
+                    Sorry, the page you're looking for doesn't exist. Maybe you mistyped the address or the page has moved.
+                </CardTitle>
+                <Button Color="Color.Primary" Size="Size.Large" Margin="Margin.Is2.FromTop" Clicked="@GoToHomePage">
+                    Go to Home
+                </Button>
+            </CardBody>
+            <CardFooter>
+                © 2024 Your Company
+            </CardFooter>
+        </Card>
+    </Div>
+</Layout>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    private void GoToHomePage()
+    {
+        Navigation.NavigateTo("/");
+    }
+}
