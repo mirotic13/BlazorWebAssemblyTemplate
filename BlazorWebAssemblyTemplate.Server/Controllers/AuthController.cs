@@ -1,4 +1,5 @@
 ﻿using BlazorWebAssemblyTemplate.Server.Auth;
+using BlazorWebAssemblyTemplate.Shared.Auth;
 using BlazorWebAssemblyTemplate.Shared.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,34 +26,37 @@ namespace BlazorWebAssemblyTemplate.Server.Controllers
             return "Este es un recurso para usuarios regulares y administradores.";
         }
 
+        [HttpGet("status")]
+        public ActionResult<AuthenticationStatus> GetAuthenticationStatus()
+        {
+            return _authService.GetUserAuthenticationStatus();
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Intentar autenticación
-            var token = await _authService.Login(request);
+            var auth = await _authService.Login(request);
 
-            if (token == null)
-                return Unauthorized(new { message = "Correo o contraseña incorrectos." });
+            if (auth == false)
+                return Unauthorized();
 
-            return Ok(new { token });
+            return Ok();
         }
 
-        //[Authorize(Policy = "AdminPolicy")]
+        [Authorize(Policy = "AdminPolicy")]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Verificar si el usuario ya existe
             var userExists = await _authService.UserExists(registerRequest.Email);
             if (userExists)
                 return Conflict(new { message = "El usuario ya existe." });
 
-            // Registrar el usuario
             await _authService.Register(registerRequest);
             return Ok(new { message = "Usuario registrado exitosamente." });
         }
